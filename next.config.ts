@@ -1,27 +1,30 @@
 import type { NextConfig } from "next";
 
-const config = {
-   
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // 1. Force Turbopack to ignore node modules in the browser
   turbo: {
     resolveAlias: {
       fs: false,
       path: false,
+      crypto: false,
     },
   },
 
-  // 2. For Vercel Production Build (Webpack) - DO NOT DELETE THIS
+  // 2. Force Webpack (Vercel Build) to ignore node modules
   webpack: (config: any, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         path: false,
+        crypto: false,
       };
     }
     return config;
   },
 
-  // 3. For Piper TTS Voice Multi-threading
+  // 3. Essential for Piper TTS to actually talk
   async headers() {
     return [
       {
@@ -35,4 +38,5 @@ const config = {
   },
 };
 
-export default config as NextConfig;
+ 
+export default nextConfig as any as NextConfig;
