@@ -9,16 +9,6 @@ const config = {
       path: false,
     },
   },
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        path: false,
-      };
-    }
-    return config;
-  },
   async headers() {
     return [
       {
