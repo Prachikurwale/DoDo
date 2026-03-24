@@ -1,14 +1,27 @@
 import type { NextConfig } from "next";
 
-// We define the object without the strict 'NextConfig' type first 
-// to allow the 'turbo' key which TS is currently rejecting.
 const config = {
+   
   turbo: {
     resolveAlias: {
       fs: false,
       path: false,
     },
   },
+
+  // 2. For Vercel Production Build (Webpack) - DO NOT DELETE THIS
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+      };
+    }
+    return config;
+  },
+
+  // 3. For Piper TTS Voice Multi-threading
   async headers() {
     return [
       {
@@ -22,5 +35,4 @@ const config = {
   },
 };
 
-// Now we export it while telling TS it's okay.
 export default config as NextConfig;
