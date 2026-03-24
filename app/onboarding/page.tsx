@@ -1,14 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({ childName: "", age: 5, favoriteThings: "" });
+  const [formData, setFormData] = useState({ childName: "", age: 5, favoriteThings: "", language: "English" });
   const router = useRouter();
-  const { update } = useSession();
+  const { data: session, status: authStatus, update } = useSession();
+
+  // Redirect logic based on authentication
+  useEffect(() => {
+    if (authStatus === "unauthenticated") {
+      // Not logged in - redirect to login
+      router.push("/");
+    } else if (authStatus === "authenticated" && (session?.user as any)?.onboarded) {
+      // Already onboarded - redirect to dashboard
+      router.push("/dashboard");
+    }
+  }, [authStatus, session, router]);
 
   const handleSubmit = async () => {
     const res = await fetch("/api/onboarding", {
@@ -77,8 +88,35 @@ export default function Onboarding() {
               onChange={(e) => setFormData({...formData, favoriteThings: e.target.value})}
             />
             <button 
+              onClick={() => setStep(4)}
+              className="w-full bg-pink-500 text-white py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-pink-600 transition-all"
+            >
+              Next! ➡️
+            </button>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div className="space-y-4">
+            <label className="block text-gray-700 font-bold">Pick your favorite language! 🗣️</label>
+            <div className="grid grid-cols-2 gap-3">
+              {["English", "Hindi", "Marathi"].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => setFormData({...formData, language: lang})}
+                  className={`p-4 rounded-2xl font-bold text-lg transition-all ${
+                    formData.language === lang
+                      ? "bg-green-500 text-white shadow-lg"
+                      : "bg-pink-100 text-pink-600 border-2 border-pink-200"
+                  }`}
+                >
+                  {lang}
+                </button>
+              ))}
+            </div>
+            <button 
               onClick={handleSubmit}
-              className="w-full bg-green-500 text-white py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-600 transition-all"
+              className="w-full bg-green-500 text-white py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-600 transition-all mt-6"
             >
               Let's Play! 🎨
             </button>

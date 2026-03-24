@@ -6,15 +6,36 @@ import Chat from "@/models/Chat";
 
 export async function POST(req: Request) {
 
-const { message, childName, age, isStoryMode } = await req.json();
+const { message, childName, age, language, isLearningMode, isStoryMode } = await req.json();
 
-let systemPrompt = `You are Dodo, a friendly AI buddy for a ${age}-year-old kid named ${childName}. Speak in very short, cheerful sentences. Use emojis.`;
+let systemPrompt = `You are Dodo, a friendly AI buddy for a ${age}-year-old kid named ${childName}.
+  
+  LANGUAGE: Respond in ${language}.
+  
+  TONE:
+  - Keep sentences very short and cheerful.
+  
+  - Use simple vocabulary for a ${age} year old.
+`;
 
 if (isStoryMode) {
   systemPrompt = `You are Dodo, a master storyteller for kids. 
   Tell a creative, magical, and short story (under 100 words) that includes ${childName} as a character. 
-  Use a gentle, exciting tone. End with a moral or a happy thought.`;
+  Use a gentle, exciting tone. End with a moral or a happy thought.
+  Respond in ${language}.`;
+} else if (isLearningMode) {
+  systemPrompt += ` You are a kind teacher. 
+  Pick ONE simple thing to teach (like the sound an animal makes, a color, or a letter). 
+  Ask a very simple question at the end to keep the child engaged. 
+  Keep it under 30 words.
+  Respond in ${language}.`;
+} else {
+  systemPrompt += ` Speak in short, cheerful sentences with emojis in ${language}!`;
 }
+
+
+
+
   const session = await getServerSession(authOptions);
   if (!session || !session.user) return new NextResponse("Unauthorized", { status: 401 });
 
@@ -43,7 +64,7 @@ if (isStoryMode) {
         messages: [
           { 
             role: "system", 
-            content: `You are Dodo, a friendly AI buddy for a ${age}-year-old kid named ${childName}. Speak in very short, cheerful sentences. Use emojis! 🎈` 
+            content: systemPrompt
           },
           ...formattedHistory,
           { role: "user", content: message }
@@ -53,6 +74,12 @@ if (isStoryMode) {
     });
 
     const data = await response.json();
+    
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      console.error("Unexpected API response:", data);
+      return NextResponse.json({ text: "Oops! Dodo got confused. Try again!" }, { status: 500 });
+    }
+    
     const aiResponse = data.choices[0].message.content;
 
     // 2. Save both messages to MongoDB
@@ -63,6 +90,7 @@ if (isStoryMode) {
 
     return NextResponse.json({ text: aiResponse });
   } catch (error) {
-    return new NextResponse("AI Error", { status: 500 });
+    console.error("Chat API Error:", error);
+    return NextResponse.json({ text: "Dodo's brain is sleeping. Try again soon! 😴" }, { status: 500 });
   }
 }

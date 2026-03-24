@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     if (!session) return new NextResponse("Unauthorized", { status: 401 });
 
     const body = await req.json();
-    const { childName, age, favoriteThings } = body;
+    const { childName, age, favoriteThings, language } = body;
 
     await connectDB();
     await User.findOneAndUpdate(
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       { 
         childName, 
         age, 
-        preferences: { favoriteAnimals: [favoriteThings] },
+        preferences: { favoriteAnimals: [favoriteThings], language: language || "English" },
         onboarded: true 
       }
     );
