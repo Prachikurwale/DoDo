@@ -1,7 +1,7 @@
 // proxy.ts
 import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
-
+export const runtime = 'nodejs'; // Force the proxy to use the full Node.js engine
 export default withAuth(
   function middleware(request: any) { // Changed 'NextRequest' to 'any' here
     const token = request.nextauth?.token;
