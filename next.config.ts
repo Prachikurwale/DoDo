@@ -2,16 +2,7 @@ import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 1. Force Turbopack to ignore node modules in the browser
-  turbo: {
-    resolveAlias: {
-      fs: false,
-      path: false,
-      crypto: false,
-    },
-  },
-
-  // 2. Force Webpack (Vercel Build) to ignore node modules
+  // Use webpack instead of Turbopack for better compatibility with piper-tts
   webpack: (config: any, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -24,7 +15,7 @@ const nextConfig = {
     return config;
   },
 
-  // 3. Essential for Piper TTS to actually talk
+  // Essential for Piper TTS to actually talk
   async headers() {
     return [
       {
@@ -38,5 +29,4 @@ const nextConfig = {
   },
 };
 
- 
-export default nextConfig as any as NextConfig;
+ export default nextConfig as any as NextConfig;
