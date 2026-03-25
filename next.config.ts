@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
-const nextConfig = {
-  // 1. Tell Turbopack to ignore Node modules
+ 
+const config = {
+  
   turbo: {
     resolveAlias: {
       fs: false,
@@ -9,8 +10,8 @@ const nextConfig = {
       crypto: false,
     },
   },
-  // 2. Tell Webpack (Vercel Build) to ignore Node modules
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+
+   webpack: (config: any, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -21,7 +22,8 @@ const nextConfig = {
     }
     return config;
   },
-  async headers() {
+
+   async headers() {
     return [
       {
         source: "/(.*)",
@@ -34,4 +36,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig as any as NextConfig;
+ export default config as any as NextConfig;
