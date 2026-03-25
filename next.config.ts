@@ -1,17 +1,12 @@
 import type { NextConfig } from "next";
 
  
-const config = {
+const nextConfig: NextConfig = {
+   
+  transpilePackages: ["speech-to-speech"],
   
-  turbo: {
-    resolveAlias: {
-      fs: false,
-      path: false,
-      crypto: false,
-    },
-  },
-
-   webpack: (config: any, { isServer }: { isServer: boolean }) => {
+ 
+  webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -22,8 +17,8 @@ const config = {
     }
     return config;
   },
-
-   async headers() {
+ 
+  async headers() {
     return [
       {
         source: "/(.*)",
@@ -36,4 +31,4 @@ const config = {
   },
 };
 
- export default config as any as NextConfig;
+export default nextConfig;
