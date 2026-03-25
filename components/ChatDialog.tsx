@@ -149,7 +149,7 @@ export default function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
             initial={{ scale: 0.95, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.95, y: 20 }}
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-md h-[470px] flex flex-col border-2 border-pink-200 relative overflow-hidden"
+            className="bg-white rounded-3xl shadow-2xl w-[400px] max-w-md h-[470px] flex flex-col border-2 border-pink-200 relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Background Bubbles */}

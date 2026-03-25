@@ -546,8 +546,8 @@ export default function DodoMobileDashboard() {
     className="relative z-0"  
   >
     <img
-      src="/Pp-r.png"
-      alt="Quizzy"
+      src="/cuteee.png"
+      alt="DODO"
       className="w-70 h-auto rounded-full" 
     />
   </motion.div>
