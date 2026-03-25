@@ -39,7 +39,7 @@ export default function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
     scrollToBottom();
   }, [messages]);
 
-  // Load child info from localStorage
+ 
   useEffect(() => {
     const savedInfo = localStorage.getItem('childInfo');
     if (savedInfo) {
@@ -55,7 +55,7 @@ export default function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
-    // Add user message
+    
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputValue,
@@ -124,9 +124,9 @@ export default function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
             ease: "easeInOut",
           }}
           style={{
-            width: `${20 + i * 15}px`,
-            height: `${20 + i * 15}px`,
-            left: `${15 + i * 15}%`,
+            width: `${15 + i * 10}px`,
+            height: `${15 + i * 10}px`,
+            left: `${10 + i * 10}%`,
             top: `${10 + i * 12}%`,
             background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,192,203,${0.2 + i * 0.1}))`,
           }}
@@ -149,15 +149,15 @@ export default function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
             initial={{ scale: 0.95, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.95, y: 20 }}
-            className="bg-white rounded-3xl shadow-2xl w-[400px] max-w-md h-[470px] flex flex-col border-2 border-pink-200 relative overflow-hidden"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-[350px]  h-117.5 flex flex-col border-2 border-pink-200 relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Background Bubbles */}
+           
             <div className="absolute inset-0 pointer-events-none">
               <Bubbles />
             </div>
 
-            {/* Header */}
+           
             <div className="bg-linear-to-r from-pink-400 to-pink-300 rounded-t-3xl p-4 flex items-center justify-between relative z-10">
               <div className="flex items-center gap-3">
                 <span className="text-3xl">🎭</span>

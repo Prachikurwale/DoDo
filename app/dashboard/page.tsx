@@ -415,63 +415,12 @@ export default function DodoMobileDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_bottom,#993366_0%,#ffffff_100%)] flex flex-col items-center font-sans">
+    <div className="min-h-screen w-full bg-[linear-gradient(to_bottom,#993366_0%,#ffffff_100%)] flex flex-col items-center font-sans overflow-hidden">
       <Navbar />
-<motion.div 
-    className="absolute -top-8 -left-8 w-6 h-6 bg-pink-300 rounded-full opacity-70"
-    animate={{ scale: [1, 1.3, 1], y: [0, -5, 0] }}
-    transition={{ duration: 2, repeat: Infinity }}
-  />
-  <motion.div 
-    className="absolute -top-4 -right-10 w-15 h-15 bg-purple-300 rounded-full opacity-60"
-    animate={{ scale: [1, 1.2, 1], y: [0, 5, 0] }}
-    transition={{ duration: 2.5, repeat: Infinity, delay: 0.2 }}
-  />
-  <motion.div 
-    className="absolute top-1/4 -left-10 w-4 h-4 bg-blue-300 rounded-full opacity-65"
-    animate={{ x: [0, -5, 0], y: [0, -3, 0] }}
-    transition={{ duration: 2.2, repeat: Infinity, delay: 0.4 }}
-  />
-  <motion.div 
-    className="absolute top-1/2 -right-12 w-5 h-5 bg-pink-400 rounded-full opacity-55"
-    animate={{ scale: [1, 1.4, 1], y: [0, 4, 0] }}
-    transition={{ duration: 2.3, repeat: Infinity, delay: 0.3 }}
-  />
-  <motion.div 
-    className="absolute bottom-1/4 -left-6 w-3.5 h-3.5 bg-purple-400 rounded-full opacity-65"
-    animate={{ x: [0, -4, 0], y: [0, 3, 0] }}
-    transition={{ duration: 2.1, repeat: Infinity, delay: 0.5 }}
-  />
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-md px-6 relative">
-        <motion.div 
-    className="absolute -top-8 -left-8 w-6 h-6 bg-pink-300 rounded-full opacity-70"
-    animate={{ scale: [1, 1.3, 1], y: [0, -5, 0] }}
-    transition={{ duration: 2, repeat: Infinity }}
-  />
-  <motion.div 
-    className="absolute -top-4 -right-10 w-5 h-5 bg-purple-300 rounded-full opacity-60"
-    animate={{ scale: [1, 1.2, 1], y: [0, 5, 0] }}
-    transition={{ duration: 2.5, repeat: Infinity, delay: 0.2 }}
-  />
-  <motion.div 
-    className="absolute top-1/4 -left-10 w-4 h-4 bg-blue-300 rounded-full opacity-65"
-    animate={{ x: [0, -5, 0], y: [0, -3, 0] }}
-    transition={{ duration: 2.2, repeat: Infinity, delay: 0.4 }}
-  />
-  <motion.div 
-    className="absolute top-1/2 -right-12 w-5 h-5 bg-pink-400 rounded-full opacity-55"
-    animate={{ scale: [1, 1.4, 1], y: [0, 4, 0] }}
-    transition={{ duration: 2.3, repeat: Infinity, delay: 0.3 }}
-  />
-  <motion.div 
-    className="absolute bottom-1/4 -left-6 w-3.5 h-3.5 bg-purple-400 rounded-full opacity-65"
-    animate={{ x: [0, -4, 0], y: [0, 3, 0] }}
-    transition={{ duration: 2.1, repeat: Infinity, delay: 0.5 }}
-  />
-       
-        
 
-        <div className="relative mb-12">
+      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 relative overflow-hidden">
+        
+        <div className="relative mb-12 w-full max-w-md mx-auto">
   <AnimatePresence>
     <motion.div
        initial={{ opacity: 0, scale: 0.5, y: 10 }}
@@ -479,8 +428,7 @@ export default function DodoMobileDashboard() {
       exit={{ opacity: 0, scale: 0.5, y: -10 }}
       transition={{ type: "spring", stiffness: 200, damping: 15 }}
       
-       className="absolute   -right-10 px-7 py-4 rounded-4xl rounded-bl-none shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-10 
-                   border-2 border-pink-300"
+       className="absolute top-24 -right-2 px-7 py-4 rounded-4xl rounded-bl-none shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-10 border-2 border-pink-300"
     >
       <p className="font-bold text-xl text-[#111b1a] drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]">
         {aiText}
@@ -555,21 +503,18 @@ export default function DodoMobileDashboard() {
         
 
        
-        <div className="flex gap-4 w-full mb-12">
-
-
-          
+        <div className="flex gap-2 sm:gap-4 w-full mb-12">
           <button
             onClick={wakeUpDodo}
             disabled={!isReady || status === "listening"}
-            className="flex-1 py-5 bg-[#6D8F8F] text-white rounded-[2.5rem] font-bold text-xl shadow-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center"
+            className="flex-1 py-4 sm:py-5 bg-[#6D8F8F] text-white rounded-[2.5rem] font-bold text-sm sm:text-xl shadow-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center"
           >
             {!isReady ? <Loader2 className="animate-spin" size={24} /> : "Start Talking"}
           </button>
 
           <button
             onClick={stopConversation}
-            className="flex-1 py-5 bg-[#6D8F8F] text-white rounded-[2.5rem] font-bold text-lg shadow-lg active:scale-95 transition-all"
+            className="flex-1 py-4 sm:py-5 bg-[#6D8F8F] text-white rounded-[2.5rem] font-bold text-sm sm:text-lg shadow-lg active:scale-95 transition-all"
           >
             End Conversation
           </button>
@@ -590,7 +535,8 @@ export default function DodoMobileDashboard() {
             <Play size={12} className="text-gray-400 fill-gray-400" />
           </button>
         </div>
+        </div>
       </div>
-    </div>
+    
   );
 }

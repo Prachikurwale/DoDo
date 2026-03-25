@@ -119,11 +119,11 @@ export default function Navbar() {
         </h1>
       </div>
 
-      {/* Chat Button (Desktop & Mobile) */}
+       
       <div className="flex items-center gap-4">
         <button
           onClick={() => setIsChatOpen(true)}
-          className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-400 to-pink-300 hover:from-pink-500 hover:to-pink-400 text-white rounded-full font-semibold transition-all shadow-md"
+          className="hidden sm:flex items-center gap-2 px-4 py-2 bg-linear-to-r from-pink-400 to-pink-300 hover:from-pink-500 hover:to-pink-400 text-white rounded-full font-semibold transition-all shadow-md"
         >
           <MessageCircle size={20} />
           <span>Chat with Dodo</span>
@@ -136,7 +136,7 @@ export default function Navbar() {
           <MessageCircle size={24} className="text-pink-400" />
         </button>
 
-        {/* Profile Section */}
+         
         <div className="relative">
           <button 
             onClick={() => setIsOpen(!isOpen)}
